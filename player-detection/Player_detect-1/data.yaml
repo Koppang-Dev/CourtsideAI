@@ -1,0 +1,17 @@
+names:
+- Basketball-courts
+- ball
+- made
+- person
+- rim
+- shoot
+nc: 6
+roboflow:
+  license: CC BY 4.0
+  project: player_detect-0spfb
+  url: https://universe.roboflow.com/test-datset/player_detect-0spfb/dataset/1
+  version: 1
+  workspace: test-datset
+test: ../test/images
+train: Player_detect-1/train/images
+val: Player_detect-1/valid/images
