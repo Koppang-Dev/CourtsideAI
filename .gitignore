@@ -1,0 +1,42 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Virtual Environment
+venv/
+venv-courtside/
+venv-courtside
+.env
+*.venv
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.log
+logs/
+*.sqlite3
+db.sqlite3
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Model & Training Files
+*.h5
+*.pt
+*.pth
+*.onnx
+weights/
+checkpoints/
+runs/
+
+# Cache & Temp Files
+*.tmp
+*.swp
+*.swo
+*.bak
