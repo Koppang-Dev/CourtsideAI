@@ -2,13 +2,15 @@
 
 ## On-Court Player Recognition Using Computer Vision
 
-CourtsideAI is a computer vision project that utilizes deep learning to recognize and classify basketball players on the court. Using **MobileNetV2** and **PyTorch**, this model processes images, applies transformations, and trains on a dataset of labeled basketball players to achieve accurate player recognition.
+CourtsideAI is a computer vision project that utilizes deep learning to recognize and classify basketball players on the court in real time. It leverages **YOLOv5** for player detection and **ResNet50** for image classification, combining both models to predict players' names in real time.
 
 ---
 
 ## Features
 
-- **Pretrained MobileNetV2 Backbone**: Efficient and accurate deep learning model.
+- **YOLOv5 for Player Detection**: Detects and localizes players on the court.
+- **ResNet50 for Image Classification**: Classifies individual player images.
+- **Model Fusion for Real-Time Recognition**: Combines detection and classification for name prediction.
 - **Custom Dataset Handling**: Automatically processes images and removes corrupted files.
 - **Advanced Image Augmentation**: Includes cropping, rotation, flipping, color jitter, and blurring.
 - **Weighted Loss Function**: Balances class distribution for better performance.
@@ -21,10 +23,18 @@ CourtsideAI is a computer vision project that utilizes deep learning to recogniz
 
 ### Prerequisites
 
-Ensure you have Python installed (>=3.8) along with the required dependencies:
+Ensure you have Python installed (>=3.8). Then, create and activate a virtual environment:
 
 ```bash
-pip install torch torchvision numpy matplotlib seaborn scikit-learn pillow
+python -m venv venv-courtside
+source venv-courtside/bin/activate  # On macOS/Linux
+venv-courtside\Scripts\activate    # On Windows
+```
+
+Next, install the required dependencies:
+
+```bash
+pip install -r requirements.txt
 ```
 
 ### Clone Repository
