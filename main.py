@@ -6,10 +6,10 @@ import cv2
 def main():
 
     # Reading the video
-    video_frames, fps = read_video('data/input_videos/lakerVideoSmall.mp4')
+    video_frames, fps = read_video('input-videos/lakerVideoSmall.mp4')
 
     # Tracker initalization
-    tracker = Tracker('models/final_yolo_model.pt')
+    tracker = Tracker('models/yolo_models/final_yolo_model.pt')
 
     # Run detection
     yolo_detections = tracker.get_yolo_detections(video_frames)
@@ -17,7 +17,7 @@ def main():
     # Draw only YOLO bounding boxes
     frames_with_boxes = tracker.draw_yolo_bboxes(video_frames, yolo_detections)
 
-    tracks = tracker.get_object_tracks(video_frames, read_from_stub=True, stub_path='stubs/track_stubs3.pkl')
+    tracks = tracker.get_object_tracks(video_frames, read_from_stub=False, stub_path='stubs/track_stubs3.pkl')
 
     # Drawing output
     # Draw object tracks
@@ -29,7 +29,7 @@ def main():
 
 
     # Saving video new ellipse
-    save_video(output_video_frames, 'output_videos/output_video11.mp4', fps)
+    save_video(output_video_frames, 'output-videos/output_video11.mp4', fps)
 
 
 
