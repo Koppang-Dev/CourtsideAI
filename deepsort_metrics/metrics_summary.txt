@@ -1,0 +1,4 @@
+Total Tracks: 50
+Avg Track Lifetime: 172.18
+Total ID Switches: 39
+Max Active Tracks: 19

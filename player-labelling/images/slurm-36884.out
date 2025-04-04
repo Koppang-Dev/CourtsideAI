@@ -1,9 +1,0 @@
-Downloading images for: Shake Milton
-Downloading images for: Markieff Morris
-HTTPSConnectionPool(host='ogden_images.s3.amazonaws.com', port=443): Max retries exceeded with url: /www.kusports.com/images/2020/10/14012429/AP20281099199793.jpg (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'ogden_images.s3.amazonaws.com'. (_ssl.c:1010)")))
-HTTPSConnectionPool(host='ogden_images.s3.amazonaws.com', port=443): Max retries exceeded with url: /www.ljworld.com/images/2011/12/15025527/Hornets_Suns_Basketba_Geri_1.jpg (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'ogden_images.s3.amazonaws.com'. (_ssl.c:1010)")))
-Downloading images for: Austin Reaves
-Downloading images for: Cam Reddish
-Downloading images for: Jarred Vanderbilt
-Downloading images for: Gabe Vincent
-Job finished at Sun Mar 16 12:48:21 MDT 2025
