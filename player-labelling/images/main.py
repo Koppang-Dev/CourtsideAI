@@ -15,23 +15,19 @@ DESTINATION_FOLDER = "/home/riley.koppang/final_project/player_labelling/images/
 # Function to get a list of NBA players (example using a static list)
 def get_nba_players():
     players = [
-        # "Luka Doncic",
-        # "Dorian Finney-Smith",
-        # "Jordan Goodwin",
-        # "Rui Hachimura",
-        # "Jaxson Hayes",
-        # "Bronny James",
-        # "LeBron James",
-        # "Trey Jemison III",
-        # "Maxi Kleber",
-        # "Dalton Knecht",
-        # "Christian Koloko",
-        # "Alex Len",
-        "Shake Milton",
-        "Markieff Morris",
-        "Austin Reaves",
-        "Cam Reddish",
-        "Jarred Vanderbilt",
+
+        # Clippers Players
+        "Kawhi leonard",
+        "Ivica Zubac",
+        "Kris Dunn",
+        "Norman Powell",
+        "James Harden",
+
+        # Lakers Players
+        "Luka Doncic",
+        "Dorian Finney-Smith",
+        "Jaxson Hayes",
+        "LeBron James",
         "Gabe Vincent"
     ]
     return players
@@ -41,29 +37,14 @@ def download_images(player_names, limit=100):
     # Initialize the downloader
     response = simp.simple_image_download()
 
-
     # Downloading images for each player
     for player in player_names:
         print(f"Downloading images for: {player}")
         
         # Download images for the player
-        response.download(player, limit=limit)
+        search_query = player + " NBA player"
 
-        # Move images to a folder named after the player in the source folder
-        player_folder = os.path.join(SOURCE_FOLDER, player.replace(" ", "_"))
-        os.makedirs(player_folder, exist_ok=True)
-
-        # Move downloaded images to the player's folder in the source folder
-        downloaded_folder = os.path.join("simple_images", player.replace(" ", "_"))
-        if os.path.exists(downloaded_folder):
-            for file_name in os.listdir(downloaded_folder):
-                file_path = os.path.join(downloaded_folder, file_name)
-                if os.path.isfile(file_path):
-                    os.rename(file_path, os.path.join(player_folder, file_name))
-                    print(f"Moved {file_name} to {player_folder}")
-            # Remove the empty folder
-            os.rmdir(downloaded_folder)
-            print(f"Removed empty folder: {downloaded_folder}")
+        response.download(search_query, limit=limit)
 
 # Main function
 def main():
@@ -75,7 +56,6 @@ def main():
 
     # Step 2: Download images for each player
     download_images(player_names, limit=50)  
-
 
 
 if __name__ == "__main__":
