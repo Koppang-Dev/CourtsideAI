@@ -47,11 +47,11 @@ class Tracker:
         # Initializing Deep SORT tracker
         self.deepsort = DeepSort()
 
-        # Initializing ResNet18 model architecture
-        self.classification_model = models.resnet50(pretrained=False)  # Initialize the model without pretrained weights
+        # Initializing ResNet50 model architecture
+        self.classification_model = models.resnet50(pretrained=False)  
 
-        # Modify the final fully connected layer (adjust according to your dataset)
-        num_classes = 10 # Update this with your actual number of classes
+        # Using training architecture
+        num_classes = 10 
         self.classification_model.fc = nn.Sequential(
                 nn.Linear(self.classification_model.fc.in_features, 1024),
                 nn.BatchNorm1d(1024),
@@ -62,14 +62,6 @@ class Tracker:
                 nn.ReLU(),
                 nn.Dropout(0.5),
                 nn.Linear(512, num_classes)
-            
-            # These are the original best_model parameters
-            # nn.Dropout(0.3),
-            # nn.Linear(self.classification_model.fc.in_features, 512),
-            # nn.BatchNorm1d(512),
-            # nn.ReLU(),
-            # nn.Dropout(0.5),
-            # nn.Linear(512, num_classes)
         )
 
         # Load the saved weights into the model
@@ -94,10 +86,10 @@ class Tracker:
                 transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         ])
     
-   
 
+    # Updating the players label assignment
     def update_player_assignment(self, track_id, new_class_idx, confidence):
-        """Strictly enforce unique class assignments based on highest confidence"""
+
         # Initialize track history if needed
         if track_id not in self.track_history:
             self.track_history[track_id] = {
@@ -109,27 +101,30 @@ class Tracker:
         history = self.track_history[track_id]
         history["frames"] += 1
         
-        # Case 1: This track already has an assigned class
+        # If the track is already assigned to a class
         if history["class"] is not None:
-            # If this detection matches our current class, update confidence if higher
+
+            # If it belongs to the current class then update the confidence score
             if new_class_idx == history["class"]:
                 if confidence > history["confidence"]:
                     history["confidence"] = confidence
-            # If this is a different class, only consider switching if:
-            # 1. The new class isn't already assigned to someone else, AND
-            # 2. Our confidence is higher than the current assignment's confidence
+
+
+            # New class confidence is higher and no other player has the class label
             elif (new_class_idx not in self.assigned_classes and 
                 confidence > self.confidence_threshold and
                 (confidence > history["confidence"] * (1 + self.reassignment_threshold))):
+
                 # Release our current class
                 if history["class"] in self.assigned_classes:
                     self.assigned_classes.remove(history["class"])
+
                 # Take the new class
                 self.assigned_classes.add(new_class_idx)
                 history["class"] = new_class_idx
                 history["confidence"] = confidence
         
-        # Case 2: This track has no assigned class yet
+        # No track has been assigned this class
         else:
             # Only assign if:
             # 1. The class isn't already taken, AND
@@ -392,8 +387,9 @@ class Tracker:
             output_video_frames.append(frame) 
         return output_video_frames
     
+    # Generating DeepSort tracking metrics
     def visualize_deepsort_metrics(self, tracks, output_dir="deepsort_metrics"):
-        """Generate and save DeepSORT tracking metrics visualizations"""
+        # Creating the directory
         os.makedirs(output_dir, exist_ok=True)
         
         # Initialize metrics storage
@@ -410,7 +406,7 @@ class Tracker:
             
             # Track ID switches
             new_ids = set(frame_tracks.keys())
-            switches = len(current_ids - new_ids)  # IDs that disappeared
+            switches = len(current_ids - new_ids) 
             id_switches.append(switches)
             current_ids = new_ids
             
@@ -418,7 +414,7 @@ class Tracker:
             for track_id in frame_tracks:
                 track_lifetimes[track_id] += 1
         
-        # 1. Active Tracks Over Time
+        # Active Tracks Over Time
         plt.figure(figsize=(12, 6))
         plt.plot(frame_numbers, active_tracks, color='royalblue')
         plt.title('Active Player Tracks Per Frame')
@@ -428,7 +424,7 @@ class Tracker:
         plt.savefig(os.path.join(output_dir, 'active_tracks.png'))
         plt.close()
         
-        # 2. ID Switches Over Time
+        # ID Switches Over Time
         plt.figure(figsize=(12, 6))
         plt.plot(frame_numbers, id_switches, color='crimson')
         plt.title('ID Switches Per Frame')
@@ -438,7 +434,7 @@ class Tracker:
         plt.savefig(os.path.join(output_dir, 'id_switches.png'))
         plt.close()
         
-        # 3. Track Lifetime Distribution
+        # Track Lifetime Distribution
         plt.figure(figsize=(12, 6))
         plt.hist(track_lifetimes.values(), bins=20, color='seagreen')
         plt.title('Distribution of Track Lifetimes')
@@ -448,7 +444,7 @@ class Tracker:
         plt.savefig(os.path.join(output_dir, 'track_lifetimes.png'))
         plt.close()
         
-        # 4. Tracking Summary Metrics
+        # Tracking Summary Metrics
         summary_metrics = {
             'Total Tracks': len(track_lifetimes),
             'Avg Track Lifetime': np.mean(list(track_lifetimes.values())),

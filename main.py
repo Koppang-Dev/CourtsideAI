@@ -15,16 +15,15 @@ def main():
     yolo_detections = tracker.get_yolo_detections(video_frames)
 
     # Draw only YOLO bounding boxes
-    print(f"Number of frames: {len(video_frames)}")
     frames_with_boxes = tracker.draw_yolo_bboxes(video_frames, yolo_detections)
 
+    # Tracking using DeepSort
     tracks = tracker.get_object_tracks(video_frames, read_from_stub=False, stub_path='stubs/track_stubs3.pkl')
 
+    # Getting metrics for DeepSort
     metrics = tracker.visualize_deepsort_metrics(tracks)
 
-
     # Drawing output
-    # Draw object tracks
     output_video_frames = tracker.draw_annotations(video_frames, tracks)
 
 
