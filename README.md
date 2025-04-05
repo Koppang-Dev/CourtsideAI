@@ -51,7 +51,7 @@ cd CourtsideAI
 1. **Organize Images**: Place images in `images/simple_images/` following the `ImageFolder` structure:
    ```
    images/
-   ├── simple_images/
+   ├── nba_images/
    │   ├── player1/
    │   │   ├── image1.jpg
    │   │   ├── image2.jpg
@@ -63,25 +63,12 @@ cd CourtsideAI
 
 ---
 
-## Training the Model
-
-Run the following command to train the model:
-
-```bash
-python train.py
-```
-
-- The model saves the best weights automatically.
-- Training metrics and confusion matrix are displayed at the end.
-
----
-
 ## Model Evaluation
 
 To evaluate the trained model, run:
 
 ```bash
-python evaluate.py
+python main.py
 ```
 
 This script generates performance metrics and confusion matrix plots.
@@ -107,7 +94,3 @@ Feel free to fork this repository and submit pull requests for improvements!
 This project is licensed under the MIT License.
 
 ---
-
-## Contact
-
-For any inquiries, reach out at [your email or GitHub profile].
